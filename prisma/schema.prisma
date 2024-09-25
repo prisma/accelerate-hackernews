@@ -3,17 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider  = "postgres"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Post {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   url       String
   content   String
   vote      Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
