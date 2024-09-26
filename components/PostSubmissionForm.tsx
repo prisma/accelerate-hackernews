@@ -1,16 +1,20 @@
-'use client'
-import { createPost } from '@/app/submit/actions/addPost'
-import { useRef } from 'react'
+"use client";
+import { createPost } from "@/app/submit/actions/addPost";
+import { useRef } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export const PostForm = () => {
-  const ref = useRef<HTMLFormElement>(null)
+  const ref = useRef<HTMLFormElement>(null);
   return (
     <>
       <form
         ref={ref}
         action={async (formData) => {
-          await createPost(formData)
-          ref.current?.reset()
+          const success = await createPost(formData);
+          if (!success) {
+            toast.error("Profanity is not cool.");
+          }
+          ref.current?.reset();
         }}
         className="grid grid-cols-2 max-w-lg p-4 space-y-2 space-x-1"
       >
@@ -64,6 +68,7 @@ export const PostForm = () => {
           Submit
         </button>
       </form>
+      <Toaster />
     </>
-  )
-}
+  );
+};
